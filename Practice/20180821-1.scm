@@ -1,0 +1,15 @@
+(define li (cons '() '()))
+(define (put name do)
+  (define (make name do)(cons (cons name do) '()))
+  (define (putt c) 
+                 (set-cdr! c (car li))
+                 (set-car! li (car c)))
+  (putt (make name do)))
+(define (get c)
+  (define (gett list c) 
+                   (if (eq?
+                        c
+                        (car (car list)))
+                       (cdr (car list))
+                       (gett (cdr list) c)))
+  (gett li c))
