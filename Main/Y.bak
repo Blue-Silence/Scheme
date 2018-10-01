@@ -1,0 +1,13 @@
+(define (Y input)
+ ((lambda (proc) (proc proc))
+  (lambda (proc)
+   (input
+    (lambda () (proc proc)))))
+)
+
+((Y (lambda (proc)
+    (lambda (x)
+     (if (= x 0)
+         0
+         ((proc) (- x 1))))))
+ 3)
