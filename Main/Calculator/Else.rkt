@@ -12,8 +12,7 @@
   (define (? name list)
     (cond ((null? list) #f)
           ((eq? (car (car list)) name) #t)
-          (else (? name (cdr list)))))
-        
+          (else (? name (cdr list)))))        
   (? name list))
 
 (define (1st-opt list)
