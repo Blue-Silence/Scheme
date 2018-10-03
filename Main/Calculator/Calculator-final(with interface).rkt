@@ -1,6 +1,9 @@
 #lang racket
-(define (get-value List);;List --the initial list ;; return an interface that has 2 options: 1.'get --for getting the calculator; 2.(cons order (cons 'name proc)) --for adding an proc
-
+(define (get-value List);;List --the initial list ;;
+                          ;;example: (define input-list (list  (cons 1 (list (cons '+ +) (cons '- -))) (cons 2 (list (cons '* *) (cons '/ /)))))
+                        ;;return an interface that has 2 options:
+                          ;;1.'get --for getting the calculator; 2.(cons order (cons 'name proc)) --for adding an proc
+  
   (define (get-opt name target);;
   (define list (cdr target));;
   (define (get name list);;
@@ -45,4 +48,4 @@
 
  interface)
 
-;;
+
