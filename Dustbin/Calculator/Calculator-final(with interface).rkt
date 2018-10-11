@@ -3,37 +3,24 @@
                           ;;example: (define input-list (list  (cons 1 (list (cons '+ +) (cons '- -))) (cons 2 (list (cons '* *) (cons '/ /)))))
                         ;;return an interface that has 2 options:
                           ;;1.'get --for getting the calculator; 2.(cons order (cons 'name proc)) --for adding an proc
-(define (get-opt name target)
-  (define list (cdr target))
-  (define (get name list)
+  
+  (define (get-opt name target);;
+  (define list (cdr target));;
+  (define (get name list);;
     (if (eq? (car (car list)) name)
         (cdr (car list))
         (get name (cdr list))))
   (get name list))
-
-(define (member-new? name target)
+(define (member-new? name target);;
   (define list (cdr target))
   (define (? name list)
     (cond ((null? list) #f)
           ((eq? (car (car list)) name) #t)
           (else (? name (cdr list)))))        
   (? name list))
-
-(define (1st-opt list)
+(define (1st-opt list);;
   (car (cdr list)))
-
-(define (exp val list-n)
-  (if (or (null? val) (member-new? (car val) (car list-n)))
-      '()
-      (cons (car val) (exp (cdr val) list-n))))
-
-(define (exp-after val list-n)
-  (if (or (null? val) (member-new? (car val) (car list-n)))
-      val
-      (exp-after (cdr val) list-n)))
-;;Else block
-
-(define (add level pair List)  ;;insert pairs into list.
+ (define (add level pair List)  ;;insert pairs into list.
   (define tar-now (lambda () (car List)))
   (if (null? List)
       (cons (cons level (list pair)) '())
@@ -41,20 +28,18 @@
             ((< level (car (tar-now))) (cons (cons level (List pair)) (cdr List)))
             (else
              (cons (car List) (add level pair (cdr List)))))))
-;;List block
 
-  
 (define (value-begin val list)
   (define (value val list-n list-a)
+  (define rest (lambda () (cdr (cdr val))))
+  (define from-2nd (lambda () (cons (car val) (cons (car (cdr val)) (cons (car (rest)) '())))))
   (cond ((number? val) val)
-        ((null? (cdr val)) (value (car val) list-a list-a))
-        ((null? (exp-after val list-n)) (value val (cdr list-n) list-a))
+        ((null? (cdr val)) (value (car val)list-a list-a))
         (else
-         ((get-opt (car (exp-after val list-n)) (car list-n))
-          (value (exp val list-n) (cdr list-n) list-a)
-          (value (cdr (exp-after val list-n)) list-n list-a)))))
+         (if (member-new? (1st-opt val) (car list-n))
+             ((get-opt (1st-opt val) (car list-n)) (value (car val) list-a list-a) (value (rest) list-a list-a))
+             (value (cons (value (from-2nd ) (cdr list-n) list-a) (cdr (rest))) list-n list-a)))))
   (value val list list))
-;;Main block
 
 (define (interface option)
   (if (eq? option 'get)

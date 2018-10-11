@@ -18,16 +18,4 @@
 (define (1st-opt list)
   (car (cdr list)))
 
-(define (exp val list-n)
-  (if (or (null? val) (member-new? (car val) (car list-n)))
-      '()
-      (cons (car val) (exp (cdr val) list-n))))
-
-(define (exp-after val list-n)
-  (if (or (null? val) (member-new? (car val) (car list-n)))
-      val
-      (exp-after (cdr val) list-n)))
-
-
-
         
